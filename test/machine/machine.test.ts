@@ -17,7 +17,7 @@ describe('machine/GameMachine', () => {
             expect(machine.state.context.players).toHaveLength(1)
             expect(machine.send(GameModel.events.join('2', '2')).changed).toBe(true)
             expect(machine.state.context.players).toHaveLength(2)
-        })
+        }) // test ok
         
 
         it('should not let me join a game twice', () => {
@@ -27,72 +27,78 @@ describe('machine/GameMachine', () => {
 
     })
 
-    describe('dropToken', () => {
-        
+    describe("dropToken", () => {
 
         let machine: InterpreterFrom<typeof GameMachine>
 
         beforeEach(() => {
-            machine = makeGame(GameStates.PLAY, {
-                players: [{
-                    id: '1',
-                    name: '1',
-                    color: PlayerColor.RED
-                },{
-                    id: '2',
-                    name: '2',
-                    color: PlayerColor.YELLOW
-                }],
-                currentPlayer: '1',
-                grid: [
-                    ['E','E','E','E','E','E','R'],
-                    ['E','E','E','E','E','R','Y'],
-                    ['E','E','E','E','E','R','R'],
-                    ['E','E','E','E','E','R','Y'],
-                    ['E','E','E','E','E','Y','R'],
-                    ['E','E','E','E','E','Y','Y']
-                ]
-            })
+
+        
+
+         machine = makeGame(GameStates.PLAY,{
+            players: [{
+                id: '1',
+                name: '1',
+                color: PlayerColor.RED
+            },{
+                id: '2',
+                name: '2',
+                color: PlayerColor.YELLOW
+            }],
+            currentPlayer: '1',
+            grid: [
+                ['E','E','E','E','E','E','R'],
+                ['E','E','E','E','E','R','Y'],
+                ['E','E','E','E','E','R','R'],
+                ['E','E','E','E','E','R','Y'],
+                ['E','E','E','E','E','Y','R'],
+                ['E','E','E','E','E','Y','Y']
+            ]
         })
+    })
 
         it('should let me drop a token', () => {
+            //1er test => ok
+            // expect(canDropGuard(machine.state.context, GameModel.events.dropToken('1', 6))).toBe(false)
+            // expect(machine.send(GameModel.events.dropToken('1', 0)).changed).toBe(true)
+
+            //2eme test ==> ok
+            console.log(machine.state.value);
             
             expect(machine.send(GameModel.events.dropToken('1', 0)).changed).toBe(true)
             expect(machine.state.context.grid[5][0]).toBe(PlayerColor.RED)
-            
             expect(machine.state.value).toBe(GameStates.PLAY)
-            expect(machine.state.context.currentPlayer).toBe(2)
+            expect(machine.state.context.currentPlayer).toBe('2')
         })
 
         it('should not let me drop a token on filled columns', () => {
-            
+                    // test ok     
             expect(machine.send(GameModel.events.dropToken('1', 6)).changed).toBe(false)
         })
 
-        it('should make me win', () => {
-            
+        
+        it('should make me win ', () => {
+                    // test ok
             expect(machine.send(GameModel.events.dropToken('1', 5)).changed).toBe(true)
             expect(machine.state.value).toBe(GameStates.VICTORY)
             expect(machine.state.context.winingPositions).toHaveLength(4)
         })
 
-        it('should handle draw'), () => {
+        it('should handle draw', () => {
             machine = makeGame(GameStates.PLAY, {
                 ...machine.state.context,
                 grid: [
-                    
-                    ['E','Y','Y','Y','Y','Y','Y'],
-                    ['Y','Y','Y','Y','Y','Y','Y'],
-                    ['Y','Y','Y','Y','Y','Y','Y'],
-                    ['Y','Y','Y','Y','Y','Y','Y'],
-                    ['Y','Y','Y','Y','Y','Y','Y'],
-                    ['Y','Y','Y','Y','Y','Y','Y']
-                    
+                ['E','Y','Y','Y','Y','Y','Y'],
+                ['Y','Y','Y','Y','Y','Y','Y'],
+                ['Y','Y','Y','Y','Y','Y','Y'],
+                ['Y','Y','Y','Y','Y','Y','Y'],
+                ['Y','Y','Y','Y','Y','Y','Y'],
+                ['Y','Y','Y','Y','Y','Y','Y']
                 ]
             })
             expect(machine.send(GameModel.events.dropToken('1', 0)).changed).toBe(true)
             expect(machine.state.value).toBe(GameStates.DRAW)
-        }
+           
+        })
     })
 })
-

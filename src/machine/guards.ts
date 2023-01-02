@@ -21,8 +21,6 @@ export const canStartGameGuard: GameGuard<"start"> = (context, event) => {
 }
 
 export const canDropGuard: GameGuard<"dropToken"> = (context, event) => {
-   
-    
     return event.x < context.grid[0].length &&
     event.x >= 0 &&
     context.currentPlayer === event.playerId &&

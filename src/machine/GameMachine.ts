@@ -59,6 +59,12 @@ export const GameMachine = GameModel.createMachine({
             }
         },
         [GameStates.PLAY]: {
+            after: {
+                20000: {
+                    target: GameStates.PLAY,
+                    actions: [GameModel.assign(switchPlayerAction)]
+                }
+            },
             on: {
                 dropToken: [
                     {
