@@ -1,0 +1,51 @@
+html, body {
+  font-family: sans-serif;
+}
+
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.players {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.player {
+  display: flex;
+  align-items: center;
+  gap: .2rem;
+}
+
+.disc {
+  background-color: #f6db38;
+  box-shadow: inset 0 0 0 3px #d8be2d;
+  border: solid 3px #f6db38;
+  outline: solid 1px #d8be2d;
+  width: 20px;
+  height: 20px;
+  border-radius: 100%;
+}
+
+.disc-red {
+  background-color: #f63838;
+  box-shadow: inset 0 0 0 3px #d82d2d;
+  border: solid 3px #f63838;
+  outline: solid 1px #d82d2d;
+  width: 20px;
+  height: 20px;
+  border-radius: 100%;
+}
+
+.selector {
+  display: flex;
+  gap: .5rem;
+
+}
+
+.selector .disc {
+  margin: 10px;
+  transform: scale(2);
+}
