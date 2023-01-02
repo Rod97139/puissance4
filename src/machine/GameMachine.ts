@@ -1,20 +1,15 @@
-import { createMachine } from "xstate";
+import { createMachine, interpret, Interpreter, InterpreterFrom } from "xstate";
 import { createModel } from "xstate/lib/model";
-import { GridState, Player, PlayerColor } from "../types";
-import { joinGameAction } from "./actions";
-import { canJoinGuard } from "./guards";
+import { GameContext, GameStates, GridState, Player, PlayerColor, Position } from "../types";
+import { chooseColorAction, dropTokenAction, joinGameAction, leaveGameAction, restartAction, saveWiningPositionsAction, setCurrentPlayerAction, switchPlayerAction } from "./actions";
+import { canChooseColorGuard, canDropGuard, canJoinGuard, canLeaveGuard, canStartGameGuard, isDrawMoveGuard, isWiningMoveGuard } from "./guards";
 
-enum GameStates {
-    LOBBY = 'LOBBY',
-    PLAY = 'PLAY',
-    VICTORY = 'VICTORY',
-    DRAW = 'DRAW'
-}
 
 export const GameModel = createModel({
     players: [] as Player[],
     currentPlayer: null as null | Player['id'],
     rowLength: 4, 
+    winingPositions: [] as Position[],
     grid: [
         ['E','E','E','E','E','E','E'],
         ['E','E','E','E','E','E','E'],
@@ -47,36 +42,69 @@ export const GameMachine = GameModel.createMachine({
                     target: GameStates.LOBBY
                 },
                 leave: {
+                    cond: canLeaveGuard,
+                    actions: [GameModel.assign(leaveGameAction)],
                     target: GameStates.LOBBY
                 },
                 chooseColor: {
-                    target: GameStates.LOBBY
+                    cond: canChooseColorGuard,
+                    target: GameStates.LOBBY,
+                    actions: [GameModel.assign(chooseColorAction)]
                 },
                 start: {
-                    target: GameStates.PLAY
+                    cond: canStartGameGuard,
+                    target: GameStates.PLAY,
+                    actions: [GameModel.assign(setCurrentPlayerAction)]
                 }
             }
         },
         [GameStates.PLAY]: {
             on: {
-                dropToken: {
-                    target: GameStates.VICTORY
-                }
+                dropToken: [
+                    {
+                        cond: isDrawMoveGuard,
+                        target: GameStates.DRAW,
+                        actions: [GameModel.assign(dropTokenAction)]
+                    },
+                    {
+                        cond: isWiningMoveGuard,
+                        target: GameStates.VICTORY,
+                        actions: [GameModel.assign(saveWiningPositionsAction), GameModel.assign(dropTokenAction)]
+                    },
+                    {
+                        cond: canDropGuard,
+                        target: GameStates.PLAY,
+                        actions: [GameModel.assign(dropTokenAction), GameModel.assign(switchPlayerAction)]
+                    }
+                ]
             }            
         },
         [GameStates.VICTORY]: {
             on: {
                 restart: {
-                    target: GameStates.LOBBY
+                    target: GameStates.LOBBY,
+                    actions: [GameModel.assign(restartAction)]
                 }
             }
         },
         [GameStates.DRAW]: {
             on: {
                 restart: {
-                    target: GameStates.LOBBY
+                    target: GameStates.LOBBY,
+                    actions: [GameModel.assign(restartAction)]
                 }
             }
         }
     }
 })
+
+export function makeGame (state: GameStates = GameStates.LOBBY, context: Partial<GameContext> = {}): InterpreterFrom<typeof GameMachine> {
+    const machine = interpret(
+        GameMachine.withContext({
+            ...GameModel.initialContext,
+            ...context
+        })
+        ).start()
+        machine.state.value = state
+        return machine
+}
