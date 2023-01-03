@@ -5,14 +5,16 @@
 - React
 
 
-
-<!-- - Websocket -->
-<!-- - Fastify
-- NodeJS -->
-
 #########
 
-- pnpm install
-- pnpm run test
-- pnpm run dev
-- pnpm run build
+- modifier le fichier `GameMachine.ts` avant d'éffectuer les tests avec `vitest`
+- `pnpm install`
+- `pnpm run test` => tests
+- `pnpm run dev` => serveur local
+- `pnpm run build` 
+
+
+<!-- - Websocket 
+- Fastify
+- NodeJS -->
+
