@@ -2,7 +2,7 @@ import { FormEvent, useState } from "react"
 
 type NameSelectorProps = {
     onSelect: (name: string) => void,
-    disabled: boolean
+    disabled?: boolean 
 }
 
 export function NameSelector ({onSelect, disabled}: NameSelectorProps) {
@@ -11,7 +11,7 @@ export function NameSelector ({onSelect, disabled}: NameSelectorProps) {
         e.preventDefault()
         const name = new FormData(e.currentTarget as HTMLFormElement).get('name')
         if (!name || name.toString().trim() === '') {
-            setError('Vous devez chosiir un Pseudo')
+            setError('Vous devez chosir un Pseudo')
             return;
         }
         onSelect(name.toString())
@@ -23,10 +23,10 @@ export function NameSelector ({onSelect, disabled}: NameSelectorProps) {
         {error} 
         <button onClick={() => setError('')} className="alert__close">&times;</button>
         </div>}
-        <form action="" onSubmit={handleSubmit}>
+        <form className="flex" style={{gap: '.5rem'}} action="" onSubmit={handleSubmit}>
         <label htmlFor="name">Votre Pseudo</label>
         <input disabled={disabled} type="text" id="name" name="name" required/>
-        <button disabled={disabled}>Choisir</button>
+        <button className="button" disabled={disabled}>Choisir</button>
         </form>
            </>
 }
