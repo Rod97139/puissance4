@@ -1,10 +1,14 @@
 ## Technology : 
 
-- NodeJS
+
 - TypeScript
 - React
-- Websocket
-- Fastify
+
+
+
+<!-- - Websocket -->
+<!-- - Fastify
+- NodeJS -->
 
 #########
 

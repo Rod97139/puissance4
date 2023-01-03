@@ -1,17 +1,38 @@
 // import '../App.css'
 
-import { PlayerColor } from "../types"
+import { GameStates, PlayerColor } from "../types"
 import { ColorSelector } from "./component/ColorSelector"
 import { Grid } from "./component/Grid"
 import { NameSelector } from "./component/NameSelector"
 import { GameInfo } from "./component/GameInfo"
-import { Victory } from "./component/Victory"
+import { useGame } from "./hooks/useGame"
+import { LobbyScreen } from "./screens/LobbyScreen"
+import { PlayScreen } from "./screens/PlayScreen"
+import { send } from "xstate/lib/actions"
+import { currentPlayer } from "../func/game"
+import { VictoryScreen } from "./screens/VictoryScreen"
+import { DrawScreen } from "./screens/DrawScreen"
 
 function App() {
 
+  const {state, context, send} = useGame()
+  const canDrop = state === GameStates.PLAY
+  const player = canDrop ? currentPlayer(context) : undefined
+  const dropToken = canDrop ?  (x: number) => {
+    send({type: 'dropToken', x: x})
+  } : undefined
+
   return (
     <div className="container">
-     <NameSelector onSelect={() => null}/>
+
+      {state === GameStates.LOBBY && <LobbyScreen/> }
+      {state === GameStates.PLAY && <PlayScreen/> }
+      {state === GameStates.VICTORY && <VictoryScreen/> }
+      {state === GameStates.DRAW && <DrawScreen/> }
+      <Grid winingPositions={context.winingPositions} grid={context.grid} onDrop={dropToken} color={player?.color}/>
+
+
+     {/* <NameSelector onSelect={() => null}/>
      <hr />
      <ColorSelector onSelect={() => null} players={[{
       id: '1',
@@ -35,7 +56,8 @@ function App() {
         ['E','E','E','E','E','R','Y'],
         ['E','E','E','E','E','Y','R'],
         ['E','E','E','E','E','Y','Y']
-      ]}/>
+      ]}/> */}
+
     </div>
   )
 }
