@@ -1,6 +1,4 @@
-import { discColorClass } from "../../func/color"
 import { prevent } from "../../func/dom"
-import { PlayerColor } from "../../types"
 
 type DrawProps = {
     onRestart?: () => void

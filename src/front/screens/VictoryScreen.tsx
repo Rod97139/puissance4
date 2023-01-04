@@ -1,4 +1,3 @@
-import { send } from "xstate/lib/actions"
 import { currentPlayer } from "../../func/game"
 import { Victory } from "../component/Victory"
 import { useGame } from "../hooks/useGame"

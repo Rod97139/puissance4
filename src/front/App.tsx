@@ -12,6 +12,7 @@ import { send } from "xstate/lib/actions"
 import { currentPlayer } from "../func/game"
 import { VictoryScreen } from "./screens/VictoryScreen"
 import { DrawScreen } from "./screens/DrawScreen"
+import { LoginScreen } from "./screens/LoginScreen"
 
 function App() {
 
@@ -24,7 +25,7 @@ function App() {
 
   return (
     <div className="container">
-
+      <LoginScreen/>
       {state === GameStates.LOBBY && <LobbyScreen/> }
       {state === GameStates.PLAY && <PlayScreen/> }
       {state === GameStates.VICTORY && <VictoryScreen/> }
