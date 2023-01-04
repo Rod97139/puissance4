@@ -21,3 +21,7 @@ export function getSession (): PlayerSession | null {
         signature: signature 
     }
 }
+
+export function logout():void {
+    localStorage.clear()
+}

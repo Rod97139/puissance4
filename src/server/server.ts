@@ -14,7 +14,7 @@ fastify.post('/api/players', (req, res) => {
     const playerId = v4()
     const signature = sign(playerId)
     res.send({
-        playerId: playerId,
+        id: playerId,
         signature: signature
     })
 })

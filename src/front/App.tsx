@@ -16,16 +16,22 @@ import { LoginScreen } from "./screens/LoginScreen"
 
 function App() {
 
-  const {state, context, send} = useGame()
+  const {state, context, send, playerId} = useGame()
   const canDrop = state === GameStates.PLAY
   const player = canDrop ? currentPlayer(context) : undefined
   const dropToken = canDrop ?  (x: number) => {
     send({type: 'dropToken', x: x})
   } : undefined
 
-  return (
-    <div className="container">
-      <LoginScreen/>
+  if (!playerId) {
+
+    return <div className="container">
+    <LoginScreen/> 
+    </div>
+  }
+
+  return  ( <div className="container">
+      Player: {playerId}
       {state === GameStates.LOBBY && <LobbyScreen/> }
       {state === GameStates.PLAY && <PlayScreen/> }
       {state === GameStates.VICTORY && <VictoryScreen/> }
