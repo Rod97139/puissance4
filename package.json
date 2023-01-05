@@ -23,7 +23,9 @@
     "react-dom": "^18.2.0",
     "reconnecting-websocket": "^4.4.0",
     "uuid": "^9.0.0",
-    "xstate": "^4.35.1"
+    "xstate": "^4.35.1",
+    "tsx": "^3.12.1",
+    "typescript": "^4.9.3"
   },
   "devDependencies": {
     "@types/ejs": "^3.1.1",
@@ -34,8 +36,6 @@
     "@types/ws": "^8.5.4",
     "@vitejs/plugin-react": "^3.0.0",
     "nodemon": "^2.0.20",
-    "tsx": "^3.12.1",
-    "typescript": "^4.9.3",
     "vite": "^4.0.0",
     "vitest": "^0.26.3"
   },
