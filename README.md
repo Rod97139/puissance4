@@ -11,7 +11,8 @@
 Installation :
 1. `pnpm install`
 2. `pnpm run gen:key`
-3. Test (facultatif) : `pnpm run test`
+3. Test (facultatif) : `pnpm run test`, 
+4. Build: `pnpm run build`
 
 ##########
 
