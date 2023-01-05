@@ -10,11 +10,31 @@ import { ConnexionRepository } from './repositories/ConnexionRepository'
 import { GameRepository } from './repositories/GameRepository'
 import { GameModel } from '../machine/GameMachine'
 import { publishMachine } from './func/socket'
+import { readFileSync } from 'fs'
+import FastifyView from '@fastify/view'
+import ejs from 'ejs'
 
 const connexions = new ConnexionRepository()
 const games = new GameRepository(connexions)
+const env = process.env.NODE_ENV as 'dev' | 'prod'
+let manifest = {}
+try {
+  const manifestData = readFileSync('./public/assets/manifest.json')
+  manifest = JSON.parse(manifestData.toString())
+
+} catch (error) {
+    
+    console.log(error);
+    
+}
 
 const fastify = Fastify({logger: true})
+fastify.register(FastifyView, {
+    engine: {
+      ejs: ejs,
+    },
+  });
+
 fastify.register(FastifyStatic, {
     root: resolve("./public")
 })
@@ -62,6 +82,10 @@ fastify.register(async (f) => {
             games.clean(gameId)
         })
     })
+})
+
+fastify.get('/', (req, res) => {
+res.view("/templates/index.ejs", { manifest, env: process.env.NODE_ENV })
 })
 
 fastify.post('/api/players', (req, res) => {
