@@ -14,6 +14,7 @@ specifiers:
   nodemon: ^2.0.20
   react: ^18.2.0
   react-dom: ^18.2.0
+  reconnecting-websocket: ^4.4.0
   tsx: ^3.12.1
   typescript: ^4.9.3
   uuid: ^9.0.0
@@ -28,6 +29,7 @@ dependencies:
   fastify: 4.11.0
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
+  reconnecting-websocket: 4.4.0
   uuid: 9.0.0
   xstate: 4.35.1
 
@@ -1769,6 +1771,10 @@ packages:
   /real-require/0.2.0:
     resolution: {integrity: sha512-57frrGM/OCTLqLOAh0mhVA9VBMHd+9U7Zb2THMGdBUoZVOtGbJzjxsYGDJ3A9AYYCP4hn6y1TVbaOfzWtm5GFg==}
     engines: {node: '>= 12.13.0'}
+    dev: false
+
+  /reconnecting-websocket/4.4.0:
+    resolution: {integrity: sha512-D2E33ceRPga0NvTDhJmphEgJ7FUYF0v4lr1ki0csq06OdlxKfugGzN0dSkxM/NfqCxYELK4KcaTOUOjTV6Dcng==}
     dev: false
 
   /require-from-string/2.0.2:
