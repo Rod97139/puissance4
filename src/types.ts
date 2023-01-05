@@ -19,6 +19,10 @@ export enum GameStates {
     DRAW = 'DRAW'
 }
 
+export enum ServerErrors {
+    AuthError
+}
+
 export type Player = {
     id: string,
     name: string,

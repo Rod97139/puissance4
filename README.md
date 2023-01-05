@@ -3,6 +3,9 @@
 
 - TypeScript
 - React
+- Websocket 
+- Fastify
+- NodeJS
 
 
 #########
@@ -14,7 +17,4 @@
 - `pnpm run build` 
 
 
-<!-- - Websocket 
-- Fastify
-- NodeJS -->
 

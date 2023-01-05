@@ -1,6 +1,6 @@
 // import '../App.css'
 
-import { GameStates, PlayerColor } from "../types"
+import { GameStates, PlayerColor, ServerErrors } from "../types"
 import { ColorSelector } from "./component/ColorSelector"
 import { Grid } from "./component/Grid"
 import { NameSelector } from "./component/NameSelector"
@@ -13,6 +13,8 @@ import { currentPlayer } from "../func/game"
 import { VictoryScreen } from "./screens/VictoryScreen"
 import { DrawScreen } from "./screens/DrawScreen"
 import { LoginScreen } from "./screens/LoginScreen"
+import { useEffect } from "react"
+import { getSession, logout } from "./func/session"
 
 function App() {
 
@@ -22,6 +24,27 @@ function App() {
   const dropToken = canDrop ?  (x: number) => {
     send({type: 'dropToken', x: x})
   } : undefined
+
+  useEffect(() => {
+    if (playerId) {
+      const searchParams = new URLSearchParams({
+        id: playerId,
+        signature: getSession()!.signature!,
+        name: getSession()!.name!,
+        gameId: 'test'
+      })
+      const socket = new WebSocket(
+        `${window.location.protocol.replace('http', 'ws')}//${window.location.host}/ws?${searchParams.toString()}`
+      )
+      socket.addEventListener('message', (event) => {
+        const message = JSON.parse(event.data)
+
+        if (message.type === 'error' && message.code === ServerErrors.AuthError) {
+          logout();
+        }
+      })
+    }
+  }, [playerId])
 
   if (!playerId) {
 
