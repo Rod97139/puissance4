@@ -8,7 +8,7 @@ type GridProps = {
     color?: PlayerColor
     onDrop?: (x: number) => void,
     winingPositions: Position[],
-    canDrop: (x:number) => boolean
+    canDrop: (x: number) => boolean
 }
 
 export function Grid ({grid, color, onDrop, winingPositions, canDrop}: GridProps) {
@@ -44,7 +44,7 @@ function Cell({x, y, color, active}: CellProps) {
 
 type ColumnProps = {
     x: number,
-    color: PlayerColor
+    color: PlayerColor,
     onDrop: (x: number) => void,
     disabled?: boolean
 }

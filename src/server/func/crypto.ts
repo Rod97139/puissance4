@@ -1,8 +1,10 @@
 import * as Crypto from 'crypto'
 import { readFileSync } from 'fs'
+import * as path from 'path'
 
 const algo = 'SHA256'
-const privateKey = readFileSync('privateKey.pem')
+
+const privateKey = readFileSync(path.resolve('privatekey.pem'))
 
 
 export function sign(

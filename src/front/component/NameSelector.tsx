@@ -18,7 +18,7 @@ export function NameSelector ({onSelect, disabled}: NameSelectorProps) {
     }
 
     return <>
-        <h1>Selectioner un Pseudo</h1>
+        <h1>Choisir un Pseudo</h1>
         {error && <div className='alert' > 
         {error} 
         <button onClick={() => setError('')} className="alert__close">&times;</button>
@@ -26,7 +26,7 @@ export function NameSelector ({onSelect, disabled}: NameSelectorProps) {
         <form className="flex" style={{gap: '.5rem'}} action="" onSubmit={handleSubmit}>
         <label htmlFor="name">Votre Pseudo</label>
         <input disabled={disabled} type="text" id="name" name="name" required/>
-        <button className="button" disabled={disabled}>Choisir</button>
+        <button className="button" disabled={disabled}>Continuer</button>
         </form>
            </>
 }

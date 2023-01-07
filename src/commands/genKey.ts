@@ -1,5 +1,7 @@
 import { generateKeyPairSync } from 'crypto'
 import { writeFileSync } from 'fs'
+import * as path from 'path'
+
 
 const { privateKey } = generateKeyPairSync('rsa', {
     modulusLength: 2048,
@@ -13,4 +15,5 @@ const { privateKey } = generateKeyPairSync('rsa', {
     }
 })
 
-writeFileSync('privatekey.pem', privateKey)
+
+writeFileSync(path.resolve('privatekey.pem'), privateKey)

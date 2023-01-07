@@ -20,7 +20,7 @@ const env = process.env.NODE_ENV as 'dev' | 'prod'
 let manifest = {}
 try {
   const manifestData = readFileSync('./public/assets/manifest.json')
-  manifest = JSON.parse(manifestData.toString())
+  manifest = JSON.parse(manifestData.toLocaleString())
 
 } catch (error) {
     
