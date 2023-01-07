@@ -9,5 +9,5 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <GameContextProvider>
        <App />
        </GameContextProvider>
-     </React.StrictMode>,
+     </React.StrictMode>
 )
